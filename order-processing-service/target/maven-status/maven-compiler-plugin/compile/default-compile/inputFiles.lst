@@ -1,2 +1,5 @@
 C:\Users\ITBNM-2313-0064-RDTh\SwiftCart-Global\order-processing-service\src\main\java\com\example\orderprocessing\OrderProcessingApplication.java
 C:\Users\ITBNM-2313-0064-RDTh\SwiftCart-Global\order-processing-service\src\main\java\com\example\orderprocessing\controller\OrderController.java
+C:\Users\ITBNM-2313-0064-RDTh\SwiftCart-Global\order-processing-service\src\main\java\com\example\orderprocessing\entity\Order.java
+C:\Users\ITBNM-2313-0064-RDTh\SwiftCart-Global\order-processing-service\src\main\java\com\example\orderprocessing\repository\OrderRepository.java
+C:\Users\ITBNM-2313-0064-RDTh\SwiftCart-Global\order-processing-service\src\main\java\com\example\orderprocessing\service\OrderService.java
