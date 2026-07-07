@@ -1,15 +1,29 @@
 package com.example.inventory.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.inventory.entity.Inventory;
+import com.example.inventory.service.InventoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/inventory")
 public class InventoryController {
 
-    @GetMapping("/status")
-    public String getStatus() {
-        return "Inventory Service එක සාර්ථකව වැඩ කරනවා! (Port 8084)";
+    @Autowired
+    private InventoryService inventoryService;
+
+    // POST: අලුත් තොගයක් ඇතුළත් කරන්න (Update Stock)
+    @PostMapping("/update")
+    public ResponseEntity<Inventory> updateStock(@RequestBody Inventory inventory) {
+        return ResponseEntity.ok(inventoryService.updateStock(inventory));
+    }
+
+    // GET: බඩු තියෙනවද කියලා චෙක් කරන්න
+    @GetMapping("/check")
+    public ResponseEntity<Boolean> checkStock(
+            @RequestParam Long productId, 
+            @RequestParam Integer quantity) {
+        return ResponseEntity.ok(inventoryService.checkInStock(productId, quantity));
     }
 }
