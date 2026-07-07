@@ -1,2 +1,6 @@
+com\example\notificationlogging\service\SystemLogService.class
 com\example\notification\controller\NotificationController.class
+com\example\notificationlogging\repository\SystemLogRepository.class
+com\example\notificationlogging\controller\SystemLogController.class
+com\example\notificationlogging\entity\SystemLog.class
 com\example\notification\NotificationApplication.class
