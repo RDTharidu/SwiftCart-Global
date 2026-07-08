@@ -123,68 +123,52 @@
     </div>
 
     <script>
-        const GATEWAY_URL = 'http://localhost:8080/api/v1';
-        const output = document.getElementById('output-screen');
-        const title = document.getElementById('section-title');
+        // Order Service එක දුවන Port එක (8083) - Gateway හරහා යනවා නම් 8080 දෙන්න
+const ORDER_API_URL = 'http://localhost:8083/api/v1/orders'; 
 
-        // 1. Product Service එකෙන් ඩේටා ගැනීම (GET)
-        function viewProducts() {
-            title.innerText = "📦 Product Catalog";
-            output.innerText = "Fetching products from Gateway...";
+function submitOrder() {
+    const orderData = {
+        productId: parseInt(document.getElementById('product-id').value),
+        quantity: parseInt(document.getElementById('qty').value),
+        totalPrice: parseFloat(document.getElementById('total-price').value),
+        customerEmail: document.getElementById('customer-email').value
+    };
+
+    if(!orderData.productId || !orderData.quantity || !orderData.totalPrice || !orderData.customerEmail) {
+        alert("Please fill all fields!");
+        return;
+    }
+
+    // 🚀 මෙන්න මෙතන තමයි අපි යතුර අරන් යන්න කියන්නේ
+    fetch(ORDER_API_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': 'swiftcart-secret-key-123' // <--- අලුත් API Key එක
+        },
+        body: JSON.stringify(orderData)
+    })
+    .then(res => {
+        if(res.ok) {
+            document.getElementById('status-msg').style.display = 'block';
             
-            fetch(`${GATEWAY_URL}/products`)
-                .then(res => res.json())
-                .then(data => {
-                    output.innerText = JSON.stringify(data, null, 4);
-                })
-                .catch(err => output.innerText = "Error: Cannot connect to API Gateway (8080)\n" + err);
+            document.getElementById('product-id').value = '';
+            document.getElementById('qty').value = '';
+            document.getElementById('total-price').value = '';
+            document.getElementById('customer-email').value = '';
+
+            setTimeout(() => {
+                document.getElementById('status-msg').style.display = 'none';
+            }, 5000);
+        } else {
+            alert("Something went wrong! Is the Order Service running on port 8083?");
         }
-
-        // 2. Order Service එකට අලුත් ඕඩර් එකක් දැමීම (POST)
-        function placeOrder() {
-            title.innerText = "🛍️ Place a New Order";
-            output.innerText = "Sending order request to Gateway...";
-            
-            const orderData = {
-                productId: 1,
-                quantity: 2,
-                totalPrice: 500000.00,
-                customerEmail: "customer@gmail.com"
-            };
-
-            fetch(`${GATEWAY_URL}/orders`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(orderData)
-            })
-                .then(res => res.json())
-                .then(data => {
-                    output.innerText = "✅ Order Placed Successfully!\n\n" + JSON.stringify(data, null, 4);
-                })
-                .catch(err => output.innerText = "Error: Cannot connect to API Gateway (8080)\n" + err);
-        }
-
-        // 3. Notification & Logging Service එකට රෙකෝඩ් එකක් දැමීම (POST)
-        function recordLog() {
-            title.innerText = "📝 Record System Log";
-            output.innerText = "Sending log data to Gateway...";
-            
-            const logData = {
-                message: "Customer accessed the Customer Portal",
-                logType: "CUSTOMER_VISIT"
-            };
-
-            fetch(`${GATEWAY_URL}/logs`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(logData)
-            })
-                .then(res => res.json())
-                .then(data => {
-                    output.innerText = "✅ Log Saved in Database!\n\n" + JSON.stringify(data, null, 4);
-                })
-                .catch(err => output.innerText = "Error: Cannot connect to API Gateway (8080)\n" + err);
-        }
+    })
+    .catch(err => {
+        console.error("Error:", err);
+        alert("Could not connect to the server.");
+    });
+}
     </script>
 
 </body>

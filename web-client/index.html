@@ -98,11 +98,17 @@
         window.onload = loadProducts;
 
         function loadProducts() {
-            fetch(GATEWAY_URL)
-                .then(res => res.json())
-                .then(data => displayProducts(data))
-                .catch(err => console.error(err));
-        }
+    fetch(GATEWAY_URL, {
+        method: 'GET', // අනිවාර්යයෙන්ම Method එක කියන්න
+        headers: { 
+            'x-api-key': 'swiftcart-secret-key-123' // <--- අලුත් API Key එක 
+        } 
+    })
+    .then(res => res.json())
+    .then(data => displayProducts(data))
+    .catch(err => console.error(err));
+}
+        
 
         function saveProduct() {
             const id = document.getElementById('prod-id').value;
