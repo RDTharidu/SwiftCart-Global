@@ -13,7 +13,7 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    
+   
     public Product addProduct(Product product) {
         return productRepository.save(product);
     }
@@ -21,5 +21,33 @@ public class ProductService {
     
     public List<Product> getAllProducts() {
         return productRepository.findAll();
+    }
+
+    
+    public Product getProductById(Long id) {
+        return productRepository.findById(id).orElse(null);
+    }
+
+    
+    public Product updateProduct(Long id, Product updatedProduct) {
+        Product existingProduct = productRepository.findById(id).orElse(null);
+        if (existingProduct != null) {
+            existingProduct.setName(updatedProduct.getName());
+            existingProduct.setDescription(updatedProduct.getDescription());
+            existingProduct.setPrice(updatedProduct.getPrice());
+            existingProduct.setStockQuantity(updatedProduct.getStockQuantity());
+            return productRepository.save(existingProduct);
+        }
+        return null;
+    }
+
+    
+    public void deleteProduct(Long id) {
+        productRepository.deleteById(id);
+    }
+
+    
+    public List<Product> searchProducts(String keyword) {
+        return productRepository.findByNameContainingIgnoreCase(keyword);
     }
 }

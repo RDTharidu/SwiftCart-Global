@@ -14,12 +14,12 @@ public class Order {
     private Long productId;
     private Integer quantity;
     private BigDecimal totalPrice;
-    private String customerEmail;
     
-    // ඕඩර් එකේ තත්ත්වය (උදා: PENDING, COMPLETED)
-    private String status; 
+    // මේ අලුත් ෆීල්ඩ්ස් දෙක දැන් හරියටම තියෙනවා
+    private String customerEmail;
+    private String status;
 
-    // Getters and Setters
+    // Getters and Setters ඔක්කොම මෙතන තියෙනවා
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
