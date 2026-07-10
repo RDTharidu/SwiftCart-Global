@@ -13,32 +13,32 @@ spring:
             allowedMethods: "*"
             allowedHeaders: "*"
       routes:
-        # 1. User Auth Service එකට යන පාර
+        # 1. User Auth Service
         - id: user-auth-service
-          uri: http://localhost:8081
+          uri: http://user-auth-service:8081
           predicates:
             - Path=/api/v1/auth/**
 
-        # 2. Product Catalog Service එකට යන පාර
+        # 2. Product Catalog Service
         - id: product-catalog-service
-          uri: http://localhost:8082
+          uri: http://product-catalog-service:8082
           predicates:
             - Path=/api/v1/products/**
 
-        
+        # 3. Order Processing Service
         - id: order-processing-service
-          uri: http://localhost:8083
+          uri: http://order-processing-service:8083
           predicates:
             - Path=/api/v1/orders/**
 
-        
+        # 4. Inventory Service
         - id: inventory-service
-          uri: http://localhost:8084
+          uri: http://inventory-service:8084
           predicates:
             - Path=/api/v1/inventory/**
 
-        
+        # 5. Notification Logging Service
         - id: notification-logging-service
-          uri: http://localhost:8085
+          uri: http://notification-logging-service:8085
           predicates:
             - Path=/api/v1/logs/**
